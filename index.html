@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PUSAKA — Atlas Budaya Indonesia</title>
+  <meta name="description" content="Ikuti enam pulau Indonesia melalui tradisi, karya, dan cerita yang tertanam di setiap tanahnya.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bark: "#211A15",
+            bark2: "#2A211A",
+            ink: "#191511",
+            cream: "#EDE3CF",
+            sand: "#B5A995",
+            moss: "#A5AF7D",
+            moss2: "#7F8963",
+            wood: "#493D30",
+            taupe: "#847867"
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', "Georgia", "serif"],
+            sans: ["Inter", "system-ui", "sans-serif"]
+          },
+          letterSpacing: {
+            wideish: "0.18em",
+            widest2: "0.25em"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .island-shape {
+      fill: #7F8963;
+      stroke: #A5AF7D;
+      stroke-width: 0.65;
+      cursor: pointer;
+      transition: fill 220ms ease, filter 220ms ease;
+    }
+    .island-deco { fill: #7F8963; pointer-events: none; }
+    .island-group:hover .island-shape,
+    .island-group.is-active .island-shape,
+    .island-group:focus-visible .island-shape {
+      fill: #C4CE9A;
+      filter: drop-shadow(0 0 10px rgba(165, 175, 125, 0.45));
+    }
+    .island-group:focus { outline: none; }
+    .island-chip.is-active,
+    .island-chip:hover { background: #211A15; border-color: #A5AF7D; }
+    .map-label.is-active { color: #A5AF7D; }
+  </style>
+</head>
+<body class="bg-bark text-cream font-sans antialiased">
+  <header class="relative min-h-[100svh] overflow-hidden">
+    <img src="assets/hero-canopy.png" alt="" class="absolute inset-0 h-full w-full object-cover" aria-hidden="true">
+    <div class="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/40 to-ink/10"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-bark via-transparent to-transparent"></div>
+
+    <div class="relative z-10 mx-auto flex h-[100px] max-w-[1440px] items-center justify-between border-b border-wood px-5 sm:px-10 lg:px-20">
+      <a href="#beranda" class="flex items-center gap-3">
+        <img src="assets/icon-leaf.svg" alt="" class="h-7 w-7" aria-hidden="true">
+        <span class="font-serif text-[32px] tracking-[0.05em] sm:text-[38px]">pusaka</span>
+        <span class="hidden text-[9px] uppercase leading-[1.5] tracking-[0.22em] text-sand sm:block">Atlas Budaya<br>Indonesia</span>
+      </a>
+
+      <nav class="hidden items-center gap-9 text-[13px] md:flex" aria-label="Navigasi utama">
+        <a class="hover:text-moss" href="#kepulauan">Kepulauan</a>
+        <a class="hover:text-moss" href="#kalimantan">Cerita pulau</a>
+        <a class="hover:text-moss" href="#wisata">Wisata ramah</a>
+        <span class="text-[11px] tracking-[0.09em] text-moss">ID</span>
+      </nav>
+
+      <button data-menu-toggle class="md:hidden" type="button" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="sr-only">Buka menu</span>
+        <span class="block h-px w-6 bg-cream"></span>
+        <span class="mt-1.5 block h-px w-6 bg-cream"></span>
+      </button>
+    </div>
+
+    <nav id="mobile-nav" data-mobile-nav class="relative z-10 hidden border-b border-wood bg-bark/95 px-5 py-4 md:hidden">
+      <div class="flex flex-col gap-4 text-sm">
+        <a href="#kepulauan">Kepulauan</a>
+        <a href="#kalimantan">Cerita pulau</a>
+        <a href="#wisata">Wisata ramah</a>
+      </div>
+    </nav>
+
+    <section id="beranda" class="relative z-10 mx-auto max-w-[1440px] px-5 pb-24 pt-16 sm:px-10 sm:pt-20 lg:px-20">
+      <p class="text-[10px] tracking-[0.25em] text-moss sm:text-[11px]">ENAM PULAU. WARISAN BUDAYA YANG TAK TERHITUNG.</p>
+      <h1 class="mt-5 max-w-[720px] font-serif text-[52px] leading-[0.98] tracking-[-0.03em] sm:text-[72px] lg:text-[92px]">
+        Dunia di balik<br>tradisi.
+      </h1>
+      <p class="mt-6 max-w-[475px] text-[15px] leading-[1.7] text-cream/95 sm:text-base">
+        Ikuti enam pulau Indonesia melalui tradisi, karya, dan cerita yang tertanam di setiap tanahnya.
+      </p>
+      <a href="#kepulauan" class="mt-8 inline-flex items-center gap-4 text-xs text-moss">
+        Temukan tradisi Anda
+        <img src="assets/icon-arrow-down.svg" alt="" class="h-[18px] w-[18px]" aria-hidden="true">
+      </a>
+    </section>
+
+    <div class="absolute bottom-6 left-0 right-0 z-10 mx-auto flex max-w-[1440px] justify-between px-5 text-[10px] tracking-[0.18em] text-sand sm:px-10 lg:px-20">
+      <p>CATATAN LAPANGAN BUDAYA</p>
+      <p class="hidden tracking-normal sm:block">Upacara adat di Kalimantan · Indonesia</p>
+    </div>
+  </header>
+
+  <section id="kepulauan" class="px-5 py-12 sm:px-10 lg:px-20 lg:py-16">
+    <div class="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        <p class="text-[10px] tracking-widest2 text-moss">KEPULAUAN / 01—06</p>
+        <h2 class="mt-2.5 font-serif text-4xl sm:text-5xl">Setiap pulau, warisan yang berbeda.</h2>
+      </div>
+      <p class="max-w-sm text-[13px] leading-[1.7] text-sand">
+        Dari sape Dayak hingga songket Minang. Pilih pulau untuk memulai perjalanan budaya Anda.
+      </p>
+    </div>
+
+    <div data-map class="relative overflow-hidden bg-ink" style="min-height: 280px;">
+      <div class="pointer-events-none absolute inset-0">
+        <div class="absolute left-[17.2%] top-0 h-full w-px bg-wood/30"></div>
+        <div class="absolute left-[35.9%] top-0 h-full w-px bg-wood/30"></div>
+        <div class="absolute left-[54.7%] top-0 h-full w-px bg-wood/30"></div>
+        <div class="absolute left-[73.4%] top-0 h-full w-px bg-wood/30"></div>
+        <div class="absolute left-[92.2%] top-0 h-full w-px bg-wood/30"></div>
+        <div class="absolute left-0 top-[24%] h-px w-full bg-wood/30"></div>
+        <div class="absolute left-0 top-[50%] h-px w-full bg-moss/30"></div>
+        <div class="absolute left-0 top-[76%] h-px w-full bg-wood/30"></div>
+      </div>
+
+      <p class="absolute left-4 top-[46%] hidden text-[9px] tracking-[0.17em] text-taupe md:block">0° KATULISTIWA</p>
+      <p class="absolute left-[8%] top-[76%] hidden font-serif italic tracking-[0.12em] text-taupe md:block">Samudra Hindia</p>
+      <p class="absolute right-[18%] top-[18%] hidden font-serif italic tracking-[0.12em] text-taupe md:block">Samudra Pasifik</p>
+      <p class="absolute bottom-3 left-4 text-[9px] tracking-[0.14em] text-taupe">INDONESIA · ATLAS BUDAYA</p>
+      <div class="absolute right-5 top-5 hidden flex-col items-center gap-1.5 md:flex">
+        <span class="text-[10px] text-sand">U</span>
+        <img src="assets/icon-compass.svg" alt="Utara" class="h-7 w-4">
+      </div>
+
+      <div data-map-canvas class="relative z-[1] px-[4%] pb-[8%] pt-[5%] sm:px-[6%]"></div>
+
+      <button data-island="sumatra" class="map-label absolute left-[8%] top-[56%] z-[2] hidden items-center gap-2 rounded-sm bg-ink px-2.5 py-1.5 text-sm md:inline-flex">
+        <span class="h-1 w-1 rounded-full bg-moss"></span> Sumatra
+      </button>
+      <button data-island="kalimantan" class="map-label absolute left-[33%] top-[16%] z-[2] hidden items-center gap-2 rounded-sm bg-ink px-2.5 py-1.5 text-sm md:inline-flex">
+        <span class="h-1 w-1 rounded-full bg-moss"></span> Kalimantan
+      </button>
+      <button data-island="jawa" class="map-label absolute left-[28%] top-[80%] z-[2] hidden items-center gap-2 rounded-sm bg-ink px-2.5 py-1.5 text-sm md:inline-flex">
+        <span class="h-1 w-1 rounded-full bg-moss"></span> Jawa
+      </button>
+      <button data-island="bali" class="map-label absolute left-[44%] top-[88%] z-[2] hidden items-center gap-2 rounded-sm bg-ink px-2.5 py-1.5 text-sm md:inline-flex">
+        <span class="h-1 w-1 rounded-full bg-moss"></span> Bali
+      </button>
+      <button data-island="sulawesi" class="map-label absolute left-[56%] top-[66%] z-[2] hidden items-center gap-2 rounded-sm bg-ink px-2.5 py-1.5 text-sm md:inline-flex">
+        <span class="h-1 w-1 rounded-full bg-moss"></span> Sulawesi
+      </button>
+      <button data-island="papua" class="map-label absolute left-[82%] top-[70%] z-[2] hidden items-center gap-2 rounded-sm bg-ink px-2.5 py-1.5 text-sm md:inline-flex">
+        <span class="h-1 w-1 rounded-full bg-moss"></span> Papua
+      </button>
+
+      <div data-map-tooltip class="pointer-events-none absolute z-20 rounded bg-bark px-2 py-1 text-xs text-moss opacity-0 transition-opacity"></div>
+    </div>
+
+    <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      <button data-island="kalimantan" class="island-chip flex h-[58px] items-center justify-between border border-wood bg-bark2 px-[18px] text-left text-[13px]">
+        Kalimantan <img src="assets/icon-arrow-br.svg" alt="" class="h-4 w-4" aria-hidden="true">
+      </button>
+      <button data-island="jawa" class="island-chip flex h-[58px] items-center justify-between border border-wood bg-bark2 px-[18px] text-left text-[13px]">
+        Jawa <img src="assets/icon-arrow-br.svg" alt="" class="h-4 w-4" aria-hidden="true">
+      </button>
+      <button data-island="bali" class="island-chip flex h-[58px] items-center justify-between border border-wood bg-bark2 px-[18px] text-left text-[13px]">
+        Bali <img src="assets/icon-arrow-br.svg" alt="" class="h-4 w-4" aria-hidden="true">
+      </button>
+      <button data-island="papua" class="island-chip flex h-[58px] items-center justify-between border border-wood bg-bark2 px-[18px] text-left text-[13px]">
+        Papua <img src="assets/icon-arrow-br.svg" alt="" class="h-4 w-4" aria-hidden="true">
+      </button>
+      <button data-island="sulawesi" class="island-chip flex h-[58px] items-center justify-between border border-wood bg-bark2 px-[18px] text-left text-[13px]">
+        Sulawesi <img src="assets/icon-arrow-br.svg" alt="" class="h-4 w-4" aria-hidden="true">
+      </button>
+      <button data-island="sumatra" class="island-chip flex h-[58px] items-center justify-between border border-wood bg-bark2 px-[18px] text-left text-[13px]">
+        Sumatra <img src="assets/icon-arrow-br.svg" alt="" class="h-4 w-4" aria-hidden="true">
+      </button>
+    </div>
+    <p class="mt-5 text-[10px] tracking-[0.14em] text-taupe">ENAM WARISAN PULAU ↓ GULIR UNTUK MENJELAJAH</p>
+  </section>
+
+  <section id="kalimantan" class="bg-bark px-5 py-12 sm:px-10 lg:px-20">
+    <div class="mb-5 flex flex-wrap items-center justify-between gap-4 border-b border-wood pb-5">
+      <div class="flex flex-wrap items-center gap-5">
+        <span class="text-[11px] text-moss">01 /</span>
+        <h2 class="font-serif text-[32px]">Kalimantan</h2>
+        <span class="text-[9px] tracking-[0.22em] text-taupe">DAYAK KENYAH</span>
+      </div>
+      <a href="#kepulauan" data-back-to-map class="text-[10px] text-sand">Kembali ke peta ↑</a>
+    </div>
+    <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+      <figure>
+        <img src="assets/island-kalimantan.png" alt="Upacara adat di Long Saan" class="h-[280px] w-full object-cover sm:h-[440px]">
+        <figcaption class="mt-4 flex items-center justify-between text-[10px]">
+          <span class="text-sand">Upacara adat · Long Saan</span>
+          <span class="tracking-[0.11em] text-taupe">CATATAN LAPANG / 01</span>
+        </figcaption>
+      </figure>
+      <div>
+        <h3 class="font-serif text-[40px] leading-none tracking-tight sm:text-[56px]">Menyusuri irama<br>Dayak Kenyah.</h3>
+        <p class="mt-5 text-sm leading-[1.7] text-sand">Di Kalimantan, sape dan ukiran kayu menjadi bahasa adat. Ikuti tradisi Dayak Kenyah melalui upacara, karya tangan, dan irama yang menghidupkan rumah panjang.</p>
+        <div class="mt-8 space-y-5">
+          <article class="flex gap-3.5">
+            <img src="assets/icon-arrow-ur.svg" alt="" class="mt-1 h-[15px] w-[15px]" aria-hidden="true">
+            <div>
+              <h4 class="text-[13px]">Long Saan</h4>
+              <p class="mt-1 text-xs leading-[1.6] text-sand">Kunjungi rumah panjang yang masih menjaga tradisi; dengarkan sape dan lihat ukiran kayu yang menjadi bagian dari upacara.</p>
+            </div>
+          </article>
+          <article class="flex gap-3.5">
+            <img src="assets/icon-arrow-ur.svg" alt="" class="mt-1 h-[15px] w-[15px]" aria-hidden="true">
+            <div>
+              <h4 class="text-[13px]">Desa Budaya Pampang</h4>
+              <p class="mt-1 text-xs leading-[1.6] text-sand">Kenali seni tari, musik sape, dan kerajinan masyarakat Dayak Kenyah bersama warga setempat.</p>
+            </div>
+          </article>
+        </div>
+        <dl class="mt-8 grid grid-cols-3 gap-6 border-t border-wood pt-4">
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">TRADISI</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Sape dan ukiran kayu</dd></div>
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">SOROTAN</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Upacara adat</dd></div>
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">BULAN KERING</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Jun–Sep</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="jawa" class="bg-bark2 px-5 py-12 sm:px-10 lg:px-20">
+    <div class="mb-5 flex flex-wrap items-center justify-between gap-4 border-b border-wood pb-5">
+      <div class="flex flex-wrap items-center gap-5">
+        <span class="text-[11px] text-moss">02 /</span>
+        <h2 class="font-serif text-[32px]">Jawa</h2>
+        <span class="text-[9px] tracking-[0.22em] text-taupe">WAYANG KULIT</span>
+      </div>
+      <a href="#kepulauan" data-back-to-map class="text-[10px] text-sand">Kembali ke peta ↑</a>
+    </div>
+    <div class="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+      <div class="lg:order-1 order-2">
+        <h3 class="font-serif text-[40px] leading-none tracking-tight sm:text-[56px]">Di mana wayang<br>bertemu cahaya.</h3>
+        <p class="mt-5 text-sm leading-[1.7] text-sand">Di Jawa, wayang kulit menjadi jendela ke dalam mitos, cerita rakyat, dan kearifan lokal. Bayang-bayang kulit kerbau, dalang, dan gending gamelan menghidupkan malam dengan cara yang unik.</p>
+        <div class="mt-8 space-y-5">
+          <article class="flex gap-3.5">
+            <img src="assets/icon-arrow-ur.svg" alt="" class="mt-1 h-[15px] w-[15px]" aria-hidden="true">
+            <div>
+              <h4 class="text-[13px]">Kraton Yogyakarta</h4>
+              <p class="mt-1 text-xs leading-[1.6] text-sand">Saksikan pertunjukan wayang kulit yang masih dipentaskan di keraton dan desa-desa budaya.</p>
+            </div>
+          </article>
+          <article class="flex gap-3.5">
+            <img src="assets/icon-arrow-ur.svg" alt="" class="mt-1 h-[15px] w-[15px]" aria-hidden="true">
+            <div>
+              <h4 class="text-[13px]">Desa Wisata Imogiri</h4>
+              <p class="mt-1 text-xs leading-[1.6] text-sand">Pelajari pembuatan wayang kulit dan teknik memainkan bayang-bayang di balik layar.</p>
+            </div>
+          </article>
+        </div>
+        <dl class="mt-8 grid grid-cols-3 gap-6 border-t border-wood pt-4">
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">TRADISI</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Wayang kulit</dd></div>
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">SOROTAN</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Pertunjukan malam</dd></div>
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">BULAN KERING</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Mei–Sep</dd></div>
+        </dl>
+      </div>
+      <figure class="lg:order-2 order-1">
+        <img src="assets/island-jawa.png" alt="Pertunjukan wayang di Yogyakarta" class="h-[280px] w-full object-cover sm:h-[440px]">
+        <figcaption class="mt-4 flex items-center justify-between text-[10px]">
+          <span class="text-sand">Pertunjukan wayang · Yogyakarta</span>
+          <span class="tracking-[0.11em] text-taupe">CATATAN LAPANG / 02</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="bali" class="bg-bark px-5 py-12 sm:px-10 lg:px-20">
+    <div class="mb-5 flex flex-wrap items-center justify-between gap-4 border-b border-wood pb-5">
+      <div class="flex flex-wrap items-center gap-5">
+        <span class="text-[11px] text-moss">03 /</span>
+        <h2 class="font-serif text-[32px]">Bali</h2>
+        <span class="text-[9px] tracking-[0.22em] text-taupe">BARONG</span>
+      </div>
+      <a href="#kepulauan" data-back-to-map class="text-[10px] text-sand">Kembali ke peta ↑</a>
+    </div>
+    <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+      <figure>
+        <img src="assets/island-bali.png" alt="Upacara Barong di Ubud" class="h-[280px] w-full object-cover sm:h-[440px]">
+        <figcaption class="mt-4 flex items-center justify-between text-[10px]">
+          <span class="text-sand">Upacara Barong · Ubud</span>
+          <span class="tracking-[0.11em] text-taupe">CATATAN LAPANG / 03</span>
+        </figcaption>
+      </figure>
+      <div>
+        <h3 class="font-serif text-[40px] leading-none tracking-tight sm:text-[56px]">Barong, penjaga<br>keseimbangan.</h3>
+        <p class="mt-5 text-sm leading-[1.7] text-sand">Di Bali, Barong menjadi simbol kekuatan dan keseimbangan. Ikuti tarian, kostum, dan makna di balik topeng yang menjadi bagian dari ritual dan kehidupan komunitas.</p>
+        <div class="mt-8 space-y-5">
+          <article class="flex gap-3.5">
+            <img src="assets/icon-arrow-ur.svg" alt="" class="mt-1 h-[15px] w-[15px]" aria-hidden="true">
+            <div>
+              <h4 class="text-[13px]">Pura Taman Saraswati</h4>
+              <p class="mt-1 text-xs leading-[1.6] text-sand">Saksikan tarian Barong di pura yang indah; pelajari makna kebaikan dan keseimbangan dalam cerita Bali.</p>
+            </div>
+          </article>
+          <article class="flex gap-3.5">
+            <img src="assets/icon-arrow-ur.svg" alt="" class="mt-1 h-[15px] w-[15px]" aria-hidden="true">
+            <div>
+              <h4 class="text-[13px]">Desa Batuan</h4>
+              <p class="mt-1 text-xs leading-[1.6] text-sand">Pelajari pembuatan topeng Barong dan teknik menghidupkan karakter lewat gerak dan ekspresi.</p>
+            </div>
+          </article>
+        </div>
+        <dl class="mt-8 grid grid-cols-3 gap-6 border-t border-wood pt-4">
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">TRADISI</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Tarian Barong</dd></div>
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">SOROTAN</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Upacara ritual</dd></div>
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">BULAN KERING</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Apr–Okt</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="papua" class="bg-bark2 px-5 py-12 sm:px-10 lg:px-20">
+    <div class="mb-5 flex flex-wrap items-center justify-between gap-4 border-b border-wood pb-5">
+      <div class="flex flex-wrap items-center gap-5">
+        <span class="text-[11px] text-moss">04 /</span>
+        <h2 class="font-serif text-[32px]">Papua</h2>
+        <span class="text-[9px] tracking-[0.22em] text-taupe">SENI UKIR ASMAT</span>
+      </div>
+      <a href="#kepulauan" data-back-to-map class="text-[10px] text-sand">Kembali ke peta ↑</a>
+    </div>
+    <div class="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+      <div class="lg:order-1 order-2">
+        <h3 class="font-serif text-[40px] leading-none tracking-tight sm:text-[56px]">Kisah leluhur<br>dalam ukiran.</h3>
+        <p class="mt-5 text-sm leading-[1.7] text-sand">Di Papua, seni ukir Asmat menjadi bahasa visual yang kaya. Ikuti motif, bentuk, dan cerita di balik rumah adat, patung, dan karya kayu yang menjadi bagian dari identitas komunitas.</p>
+        <div class="mt-8 space-y-5">
+          <article class="flex gap-3.5">
+            <img src="assets/icon-arrow-ur.svg" alt="" class="mt-1 h-[15px] w-[15px]" aria-hidden="true">
+            <div>
+              <h4 class="text-[13px]">Agats</h4>
+              <p class="mt-1 text-xs leading-[1.6] text-sand">Kunjungi rumah adat Asmat dan pelajari motif ukiran yang menjadi simbol kekuatan, leluhur, dan kehidupan komunitas.</p>
+            </div>
+          </article>
+          <article class="flex gap-3.5">
+            <img src="assets/icon-arrow-ur.svg" alt="" class="mt-1 h-[15px] w-[15px]" aria-hidden="true">
+            <div>
+              <h4 class="text-[13px]">Desa Ayam</h4>
+              <p class="mt-1 text-xs leading-[1.6] text-sand">Pelajari teknik pembuatan patung dan ukiran kayu yang menjadi warisan Asmat.</p>
+            </div>
+          </article>
+        </div>
+        <dl class="mt-8 grid grid-cols-3 gap-6 border-t border-wood pt-4">
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">TRADISI</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Seni ukir Asmat</dd></div>
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">SOROTAN</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Rumah adat</dd></div>
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">BULAN KERING</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Jun–Sep</dd></div>
+        </dl>
+      </div>
+      <figure class="lg:order-2 order-1">
+        <img src="assets/island-papua.png" alt="Rumah adat suku Asmat" class="h-[280px] w-full object-cover sm:h-[440px]">
+        <figcaption class="mt-4 flex items-center justify-between text-[10px]">
+          <span class="text-sand">Rumah adat · Suku Asmat</span>
+          <span class="tracking-[0.11em] text-taupe">CATATAN LAPANG / 04</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="sulawesi" class="bg-bark px-5 py-12 sm:px-10 lg:px-20">
+    <div class="mb-5 flex flex-wrap items-center justify-between gap-4 border-b border-wood pb-5">
+      <div class="flex flex-wrap items-center gap-5">
+        <span class="text-[11px] text-moss">05 /</span>
+        <h2 class="font-serif text-[32px]">Sulawesi</h2>
+        <span class="text-[9px] tracking-[0.22em] text-taupe">TORAJA</span>
+      </div>
+      <a href="#kepulauan" data-back-to-map class="text-[10px] text-sand">Kembali ke peta ↑</a>
+    </div>
+    <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+      <figure>
+        <img src="assets/island-sulawesi.png" alt="Tongkonan di Tana Toraja" class="h-[280px] w-full object-cover sm:h-[440px]">
+        <figcaption class="mt-4 flex items-center justify-between text-[10px]">
+          <span class="text-sand">Tongkonan · Tana Toraja</span>
+          <span class="tracking-[0.11em] text-taupe">CATATAN LAPANG / 05</span>
+        </figcaption>
+      </figure>
+      <div>
+        <h3 class="font-serif text-[40px] leading-none tracking-tight sm:text-[56px]">Tongkonan, rumah<br>penuh makna.</h3>
+        <p class="mt-5 text-sm leading-[1.7] text-sand">Di Sulawesi Selatan, Toraja menjadi contoh kebudayaan yang kaya. Tongkonan, upacara, dan kerajinan kayu menjadi bagian dari kehidupan komunitas yang menjaga tradisi dengan sangat kuat.</p>
+        <div class="mt-8 space-y-5">
+          <article class="flex gap-3.5">
+            <img src="assets/icon-arrow-ur.svg" alt="" class="mt-1 h-[15px] w-[15px]" aria-hidden="true">
+            <div>
+              <h4 class="text-[13px]">Kete Kesu</h4>
+              <p class="mt-1 text-xs leading-[1.6] text-sand">Kunjungi kompleks tongkonan yang terawat; pelajari makna arsitektur dan ukiran kayu Toraja.</p>
+            </div>
+          </article>
+          <article class="flex gap-3.5">
+            <img src="assets/icon-arrow-ur.svg" alt="" class="mt-1 h-[15px] w-[15px]" aria-hidden="true">
+            <div>
+              <h4 class="text-[13px]">Rantepao</h4>
+              <p class="mt-1 text-xs leading-[1.6] text-sand">Saksikan kerajinan kayu dan ukiran yang menjadi bagian dari upacara dan kehidupan sehari-hari Toraja.</p>
+            </div>
+          </article>
+        </div>
+        <dl class="mt-8 grid grid-cols-3 gap-6 border-t border-wood pt-4">
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">TRADISI</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Tongkonan dan ukiran</dd></div>
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">SOROTAN</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Upacara adat</dd></div>
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">BULAN KERING</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Jul–Okt</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="sumatra" class="bg-bark2 px-5 py-12 sm:px-10 lg:px-20">
+    <div class="mb-5 flex flex-wrap items-center justify-between gap-4 border-b border-wood pb-5">
+      <div class="flex flex-wrap items-center gap-5">
+        <span class="text-[11px] text-moss">06 /</span>
+        <h2 class="font-serif text-[32px]">Sumatra</h2>
+        <span class="text-[9px] tracking-[0.22em] text-taupe">MINANGKABAU</span>
+      </div>
+      <a href="#kepulauan" data-back-to-map class="text-[10px] text-sand">Kembali ke peta ↑</a>
+    </div>
+    <div class="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+      <div class="lg:order-1 order-2">
+        <h3 class="font-serif text-[40px] leading-none tracking-tight sm:text-[56px]">Warisan terjalin<br>dalam songket.</h3>
+        <p class="mt-5 text-sm leading-[1.7] text-sand">Di Sumatra Barat, rumah gadang dan songket Minangkabau menjadi simbol kearifan lokal. Ikuti motif, benang emas, dan makna di balik kain tenun yang menjadi bagian dari upacara dan kehidupan sehari-hari.</p>
+        <div class="mt-8 space-y-5">
+          <article class="flex gap-3.5">
+            <img src="assets/icon-arrow-ur.svg" alt="" class="mt-1 h-[15px] w-[15px]" aria-hidden="true">
+            <div>
+              <h4 class="text-[13px]">Pagaruyung</h4>
+              <p class="mt-1 text-xs leading-[1.6] text-sand">Kunjungi istana Pagaruyung dan pelajari arsitektur rumah gadang yang menjadi simbol Minangkabau.</p>
+            </div>
+          </article>
+          <article class="flex gap-3.5">
+            <img src="assets/icon-arrow-ur.svg" alt="" class="mt-1 h-[15px] w-[15px]" aria-hidden="true">
+            <div>
+              <h4 class="text-[13px]">Pandai Sikek</h4>
+              <p class="mt-1 text-xs leading-[1.6] text-sand">Saksikan pembuatan songket Minangkabau dan motif khas yang menjadi warisan tekstil Sumatra.</p>
+            </div>
+          </article>
+        </div>
+        <dl class="mt-8 grid grid-cols-3 gap-6 border-t border-wood pt-4">
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">TRADISI</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Songket Minangkabau</dd></div>
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">SOROTAN</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Rumah gadang</dd></div>
+          <div><dt class="text-[8px] tracking-[0.15em] text-taupe">BULAN KERING</dt><dd class="mt-1.5 text-[11px] leading-[1.4] text-moss">Jun–Sep</dd></div>
+        </dl>
+      </div>
+      <figure class="lg:order-2 order-1">
+        <img src="assets/island-sumatra.png" alt="Rumah gadang di Tanah Datar" class="h-[280px] w-full object-cover sm:h-[440px]">
+        <figcaption class="mt-4 flex items-center justify-between text-[10px]">
+          <span class="text-sand">Rumah gadang · Tanah Datar</span>
+          <span class="tracking-[0.11em] text-taupe">CATATAN LAPANG / 06</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <footer id="wisata" class="bg-ink px-5 py-12 sm:px-10 lg:px-20">
+    <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <p class="text-[10px] tracking-[0.2em] text-moss">TINGGALKAN JEJAK RINGAN</p>
+        <h2 class="mt-3 font-serif text-[32px] sm:text-[43px]">Budaya adalah rumah. Jadilah tamu.</h2>
+      </div>
+      <p class="max-w-[430px] text-[13px] leading-[1.8] text-sand">
+        Pilih pemandu lokal. Hormati pengetahuan masyarakat adat. Biarkan satwa liar tetap liar, bawa sampah Anda, dan ikuti aturan taman. Musim berbeda-beda; periksa kondisi lokal sebelum berangkat.
+      </p>
+    </div>
+    <div class="mt-11 flex flex-col items-start justify-between gap-4 border-t border-wood pt-6 sm:flex-row sm:items-center">
+      <a href="#beranda" class="flex items-center gap-3">
+        <img src="assets/icon-leaf.svg" alt="" class="h-[22px] w-[22px]" aria-hidden="true">
+        <span class="font-serif text-[32px] tracking-[0.06em]">pusaka</span>
+      </a>
+      <p class="text-[10px] text-taupe">Enam pulau. Satu kepulauan budaya.</p>
+      <p class="text-[10px] text-taupe">© 2026 PUSAKA · Atlas budaya Indonesia</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
